@@ -3,6 +3,8 @@
 Lets you build a widget that depends on the _width_ and _height_ of some image, 
 and the _color of its pixels_.
 
+Try running the <a href="https://github.com/marcglasberg/image_pixels/blob/master/example/lib/main.dart">Example</a>.
+
 ## Extend the image background-color  
  
 The `ImagePixels.container` constructor adds a background-color
@@ -59,8 +61,8 @@ The `ImagePixels` constructor lets you define an image through an `imageProvider
 and then use a `builder` to build a child widget that depends on the image dimension
 and the color of its pixels.
 
-The default constructor lets you provide the `imageProvider`, the `builder`, and a
-`defaultColor` to be used when reading pixels outside of the image 
+The default constructor lets you provide the `imageProvider`, the `builder`, 
+as well as a `defaultColor` to be used when reading pixels outside of the image 
 (or while the image is downloading).
 
 For example, this will print the size of the image:
@@ -69,44 +71,33 @@ For example, this will print the size of the image:
 ImagePixels(
     imageProvider: imageProvider,
     defaultColor: Colors.grey,
-    builder: ({
-          bool hasImage,
-          int width,
-          int height,
-          ImageDetails imageDetails,          
-          Color Function(int x, int y) pixelColorAt,
-          Color Function(Alignment alignment) pixelColorAtAlignment,
-        }) =>
-            Text("The image size is: $width x $height"),
-      );
+    builder: (context, img) => Text("Img size is: ${img.width} × ${img.height}"),
+    );
 ```
 
 <br>
 
 ### Builder parameters
 
-The `builder` parameter is of type `BuilderFromImage`, with the following parameters: 
+The `builder` provides an `img` parameter of type `BuilderFromImage`, with the following information: 
 
-* If the image is already available, `hasImage` is true, 
-and `width` and `height` indicate the image dimensions.
+* If the image is already available, `img.hasImage` is `true`, 
+and `img.width` and `img.height` indicate the image dimensions.
 
 * While the image is **not** yet available, 
-`hasImage` is false, and `width` and `height` are `null`.
+`img.hasImage` is `false`, and `img.width` and `img.height` are `null`.
 
-* The `defaultColor` will be used when reading pixels outside of the image, 
-or while the image is downloading.
-
-* The functions `pixelColorAt` and `pixelColorAtAlignment` 
-can be used by the `builder` to read the color of the image pixels. 
+* The functions `img.pixelColorAt()` and `img.pixelColorAtAlignment()` 
+can be used in the `builder` to read the color of the image pixels. 
 
 * If the coordinates point to outside of the image, 
 or if the image is not yet available, then these functions will return the
-default-color provided in the `ImagePixels` constructor.
+`defaultColor` provided in the `ImagePixels` constructor.
 
-* The `image` parameter contains the image as a `ui.Image` type. 
+* The `img.uiImage` parameter contains the image as a `ui.Image` type. 
 It will be `null` while the image is still downloading.
 
-* The `byteData` parameter contains the image already converted into a `ByteDate` type. 
+* The `img.byteData` parameter contains the image as a `ByteDate` type. 
 It will be `null` while the image is still downloading.
 
 <br>

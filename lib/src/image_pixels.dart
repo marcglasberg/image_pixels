@@ -15,26 +15,49 @@ import 'package:flutter/material.dart';
 /// if the image is not yet available, then these functions will return the
 /// default-color provided in the [ImagePixels] constructor.
 ///
-typedef BuilderFromImage = Widget Function({
-  bool hasImage,
-  int width,
-  int height,
-  ImageDetails imageDetails,
-  Color Function(int x, int y) pixelColorAt,
-  Color Function(Alignment alignment) pixelColorAtAlignment,
-});
+typedef BuilderFromImage = Widget Function(BuildContext context, ImgDetails img);
 
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 
-/// Contains the image itself, and all it's pixels as byteData.
-/// Usually you should not read from the image directly, but through
-/// the helper methods `pixelColorAt` and `pixelColorAtAlignment`.
 ///
-class ImageDetails {
-  final ui.Image image;
+class ImgDetails {
+  //
+
+  /// The width (number of pixels) of the original image.
+  final int width;
+
+  /// The height (number of pixels) of the original image.
+  final int height;
+
+  /// Returns the pixel color from its coordinates:
+  /// (0,0) top-left; To (width-1, height-1) bottom-right.
+  final Color Function(int x, int y) pixelColorAt;
+
+  /// Returns the pixel color from its coordinates:
+  /// (-1, -1) top-left; To (1, 1) bottom-right.
+  final Color Function(Alignment alignment) pixelColorAtAlignment;
+
+  /// The image itself, as a ui.Image.
+  /// Usually you should not read from the image directly, but through
+  /// the helper methods `pixelColorAt` and `pixelColorAtAlignment`.
+  final ui.Image uiImage;
+
+  /// The image itself as a ByteData.
+  /// Usually you should not read from the image directly, but through
+  /// the helper methods `pixelColorAt` and `pixelColorAtAlignment`.
   final ByteData byteData;
 
-  ImageDetails(this.image, this.byteData);
+  /// Returns true when the image is downloaded and available.
+  bool get hasImage => uiImage != null;
+
+  ImgDetails({
+    this.width,
+    this.height,
+    this.uiImage,
+    this.byteData,
+    this.pixelColorAt,
+    this.pixelColorAtAlignment,
+  });
 }
 
 // /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -80,16 +103,8 @@ class ImagePixels extends StatefulWidget {
     Widget child,
     Color defaultColor,
   ) =>
-      ({
-        bool hasImage,
-        int width,
-        int height,
-        ImageDetails imageDetails,
-        Color Function(int x, int y) pixelColorAt,
-        Color Function(Alignment alignment) pixelColorAtAlignment,
-      }) =>
-          Container(
-            color: hasImage ? pixelColorAtAlignment(colorAlignment) : defaultColor,
+      (context, img) => Container(
+            color: img.hasImage ? img.pixelColorAtAlignment(colorAlignment) : defaultColor,
             child: child,
           );
 
@@ -207,12 +222,15 @@ class _ImagePixelsState extends State<ImagePixels> {
 
   @override
   Widget build(BuildContext context) => widget.builder(
-        hasImage: width != null,
-        width: width,
-        height: height,
-        imageDetails: ImageDetails(image, byteData),
-        pixelColorAt: pixelColorAt,
-        pixelColorAtAlignment: pixelColorAtAlignment,
+        context,
+        ImgDetails(
+          width: width,
+          height: height,
+          uiImage: image,
+          byteData: byteData,
+          pixelColorAt: pixelColorAt,
+          pixelColorAtAlignment: pixelColorAtAlignment,
+        ),
       );
 }
 

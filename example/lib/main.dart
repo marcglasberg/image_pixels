@@ -63,16 +63,9 @@ class _MyHomePageState extends State<MyHomePage> {
               // to the image's width/height and pixels.
               child: ImagePixels(
                 imageProvider: angular,
-                builder: ({
-                  bool hasImage,
-                  int width,
-                  int height,
-                  ImageDetails imageDetails,
-                  Color Function(int x, int y) pixelColorAt,
-                  Color Function(Alignment alignment) pixelColorAtAlignment,
-                }) {
+                builder: (BuildContext context, ImgDetails img) {
                   return Container(
-                    color: pixelColorAtAlignment(Alignment.topLeft),
+                    color: img.pixelColorAtAlignment(Alignment.topLeft),
                     alignment: Alignment.center,
                     child: Stack(
                       overflow: Overflow.visible,
@@ -86,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           right: 0,
                           left: 0,
                           child: Text(
-                            "Size: $width x $height",
+                            "Size: ${img.width} × ${img.height}",
                             textAlign: TextAlign.center,
                           ),
                         ),
