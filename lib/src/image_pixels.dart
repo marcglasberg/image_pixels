@@ -22,11 +22,23 @@ typedef BuilderFromImage = Widget Function({
   bool hasImage,
   int width,
   int height,
-  ui.Image image,
-  ByteData byteData,
+  ImageDetails imageDetails,
   Color Function(int x, int y) pixelColorAt,
   Color Function(Alignment alignment) pixelColorAtAlignment,
 });
+
+// /////////////////////////////////////////////////////////////////////////////////////////////////
+
+/// Contains the image itself, and all it's pixels as byteData.
+/// Usually you should not read from the image directly, but through
+/// the helper methods `pixelColorAt` and `pixelColorAtAlignment`.
+///
+class ImageDetails {
+  final ui.Image image;
+  final ByteData byteData;
+
+  ImageDetails(this.image, this.byteData);
+}
 
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -48,21 +60,23 @@ class ImagePixels extends StatefulWidget {
   final BuilderFromImage builder;
 
   ImagePixels({
-    this.imageProvider,
+    @required this.imageProvider,
     this.defaultColor = Colors.grey,
-    this.builder,
-  });
+    @required this.builder,
+  })  : assert(defaultColor != null),
+        assert(builder != null);
 
   /// Returns a container with the given [child].
   /// The background color of the container is given by the pixel in the [colorAlignment]
   /// position of the image pointed by the [imageProvider].
   ///
   ImagePixels.container({
-    this.imageProvider,
+    @required this.imageProvider,
     this.defaultColor = Colors.grey,
-    Alignment colorAlignment,
+    Alignment colorAlignment = Alignment.topLeft,
     Widget child,
-  }) : builder = _color(colorAlignment, child, defaultColor);
+  })  : assert(defaultColor != null),
+        builder = _color(colorAlignment, child, defaultColor);
 
   static BuilderFromImage _color(
     Alignment colorAlignment,
@@ -73,8 +87,7 @@ class ImagePixels extends StatefulWidget {
         bool hasImage,
         int width,
         int height,
-        ui.Image image,
-        ByteData byteData,
+        ImageDetails imageDetails,
         Color Function(int x, int y) pixelColorAt,
         Color Function(Alignment alignment) pixelColorAtAlignment,
       }) =>
@@ -104,7 +117,10 @@ class _ImagePixelsState extends State<ImagePixels> {
   void initState() {
     super.initState();
     if (imageProvider == null) return;
-    _refreshImage();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _refreshImage();
+    });
   }
 
   @override
@@ -121,12 +137,16 @@ class _ImagePixelsState extends State<ImagePixels> {
     //
     else
       _GetImage(
-          imageProvider: imageProvider,
-          loadCallback: (ui.Image image) {
-            setState(() {
-              _toByteData(image);
-            });
-          }).run();
+        imageProvider: imageProvider,
+        loadCallback: _loadCallback,
+        buildContext: context,
+      ).run();
+  }
+
+  void _loadCallback(ui.Image image) {
+    setState(() {
+      _toByteData(image);
+    });
   }
 
   void _toByteData(ui.Image image) {
@@ -193,6 +213,7 @@ class _ImagePixelsState extends State<ImagePixels> {
         hasImage: width != null,
         width: width,
         height: height,
+        imageDetails: ImageDetails(image, byteData),
         pixelColorAt: pixelColorAt,
         pixelColorAtAlignment: pixelColorAtAlignment,
       );
@@ -209,23 +230,31 @@ class _GetImage {
   _GetImage({
     @required this.imageProvider,
     @required this.loadCallback,
+    @required this.buildContext,
   })  : assert(imageProvider != null),
-        assert(loadCallback != null);
+        assert(loadCallback != null),
+        assert(buildContext != null);
 
   final ImageProvider imageProvider;
 
   final void Function(ui.Image) loadCallback;
 
-  void run() {
+  final BuildContext buildContext;
+
+  void run() async {
     //
     var decoder = (Uint8List bytes, {bool allowUpscaling, int cacheWidth, int cacheHeight}) =>
         PaintingBinding.instance
             .instantiateImageCodec(bytes, cacheWidth: cacheWidth, cacheHeight: cacheHeight);
 
+    ImageConfiguration imageConfiguration = createLocalImageConfiguration(buildContext);
+
+    Object key = await imageProvider.obtainKey(imageConfiguration);
+
     final ImageStreamCompleter completer = PaintingBinding.instance.imageCache.putIfAbsent(
-      imageProvider, // key
+      key, // key
       // ignore: invalid_use_of_protected_member
-      () => imageProvider.load(imageProvider, decoder), // loader
+      () => imageProvider.load(key, decoder), // loader
       onError: null,
     );
 
