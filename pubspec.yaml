@@ -1,6 +1,6 @@
 name: image_pixels
 description: Lets you extend the background color of an image, or else build any widget that depends on the image width/height, and the color of its pixels.
-version: 1.0.0
+version: 1.0.1
 author: Marcelo Glasberg <marcglasberg@gmail.com>
 homepage: https://github.com/marcglasberg/image_pixels
 

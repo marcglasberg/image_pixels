@@ -73,8 +73,7 @@ ImagePixels(
           bool hasImage,
           int width,
           int height,
-          ui.Image image,
-          ByteData byteData,
+          ImageDetails imageDetails,          
           Color Function(int x, int y) pixelColorAt,
           Color Function(Alignment alignment) pixelColorAtAlignment,
         }) =>
