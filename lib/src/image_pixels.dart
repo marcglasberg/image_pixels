@@ -258,10 +258,6 @@ class _GetImage {
 
   void run() async {
     //
-    var decoder = (Uint8List bytes, {bool allowUpscaling, int cacheWidth, int cacheHeight}) =>
-        PaintingBinding.instance
-            .instantiateImageCodec(bytes, cacheWidth: cacheWidth, cacheHeight: cacheHeight);
-
     ImageConfiguration imageConfiguration = createLocalImageConfiguration(buildContext);
 
     Object key = await imageProvider.obtainKey(imageConfiguration);
@@ -269,17 +265,58 @@ class _GetImage {
     final ImageStreamCompleter completer = PaintingBinding.instance.imageCache.putIfAbsent(
       key, // key
       // ignore: invalid_use_of_protected_member
-      () => imageProvider.load(key, decoder), // loader
+      () => imageProvider.load(key, _decoder), // loader
       onError: null,
     );
 
-    ImageListener onImage = (ImageInfo image, bool synchronousCall) {
-      if (loadCallback != null) loadCallback(image.image);
-    };
+    if (completer != null) {
+      //
+      _ListenerManager listenerManager = _ListenerManager(loadCallback);
 
-    ImageStreamListener listener = ImageStreamListener(onImage);
+      ImageListener onImage = listenerManager.onImage;
+      ImageErrorListener onError = listenerManager.onError;
 
-    completer.addListener(listener);
+      ImageStreamListener listener = ImageStreamListener(
+        onImage,
+        onError: onError,
+        onChunk: null,
+      );
+
+      listenerManager.removeListener = () {
+        completer.removeListener(listener);
+      };
+
+      completer.addListener(listener);
+    }
+  }
+
+  Future<ui.Codec> _decoder(
+    Uint8List bytes, {
+    bool allowUpscaling,
+    int cacheWidth,
+    int cacheHeight,
+  }) =>
+      PaintingBinding.instance
+          .instantiateImageCodec(bytes, cacheWidth: cacheWidth, cacheHeight: cacheHeight);
+}
+
+// /////////////////////////////////////////////////////////////////////////////////////////////////
+
+/// This is necessary because we want to remove the listener as soon as it's called.
+class _ListenerManager {
+  _ListenerManager(this.loadCallback) : assert(loadCallback != null);
+
+  VoidCallback removeListener;
+
+  final void Function(ui.Image) loadCallback;
+
+  void onImage(ImageInfo image, bool synchronousCall) {
+    if (loadCallback != null) loadCallback(image.image);
+    removeListener();
+  }
+
+  void onError(dynamic exception, StackTrace stackTrace) {
+    removeListener();
   }
 }
 
