@@ -1,6 +1,7 @@
-## [1.0.4] - 2021/01/18
+## [1.0.5] - 2021/01/18
 
 * Bug fix: Prevent setState if not mounted.
+* Doc improvements.
 
 ## [1.0.3] - 2021/01/18
 
