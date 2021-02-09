@@ -2,19 +2,21 @@
 
 # image_pixels
 
-Lets you build a widget that depends on the _width_ and _height_ of some image, 
-and the _color of its pixels_.
+Lets you build a widget that depends on the _width_ and _height_ of some image, and the _color of
+its pixels_.
 
-Try running the <a href="https://github.com/marcglasberg/image_pixels/blob/master/example/lib/main.dart">Example</a>.
+Try running
+the <a href="https://github.com/marcglasberg/image_pixels/blob/master/example/lib/main.dart">
+Example</a>.
 
-## Extend the image background-color  
- 
-The `ImagePixels.container` constructor adds a background-color
-that is the same color as the image pixel at the `colorAlignment` position.
+## Extend the image background-color
 
-For example, if you put the image inside of a `Container` you get this:
+The `ImagePixels.container` constructor adds a background-color that is the same color as the image
+pixel at the `colorAlignment` position.
 
-```dart   
+For example, if you put the image inside a `Container` you get this:
+
+```   
 Container(
     width: 250,
     height: 100,                           
@@ -27,14 +29,14 @@ Container(
         ),
 );
 ```
- 
+
 ![](https://github.com/marcglasberg/image_pixels/blob/master/example/lib/images/with_container.jpg)
 
 <br>
 
 Now, if you wrap it with an `ImagePixels.container`:
 
-```dart
+```
 ImagePixels.container(
     imageProvider: myImageProvider,    
     colorAlignment: Alignment.topLeft,
@@ -59,17 +61,16 @@ ImagePixels.container(
 
 ## Using a builder
 
-The `ImagePixels` constructor lets you define an image through an `imageProvider`,
-and then use a `builder` to build a child widget that depends on the image dimension
-and the color of its pixels.
+The `ImagePixels` constructor lets you define an image through an `imageProvider`, and then use
+a `builder` to build a child widget that depends on the image dimension and the color of its pixels.
 
-The default constructor lets you provide the `imageProvider`, the `builder`, 
-as well as a `defaultColor` to be used when reading pixels outside of the image 
+The default constructor lets you provide the `imageProvider`, the `builder`, as well as
+a `defaultColor` to be used when reading pixels outside of the image
 (or while the image is downloading).
 
 For example, this will print the size of the image:
 
-```dart
+```
 ImagePixels(
     imageProvider: imageProvider,
     defaultColor: Colors.grey,
@@ -81,45 +82,46 @@ ImagePixels(
 
 ### Builder parameters
 
-The `builder` provides an `img` parameter of type `BuilderFromImage`, with the following information: 
+The `builder` provides an `img` parameter of type `BuilderFromImage`, with the following
+information:
 
-* If the image is already available, `img.hasImage` is `true`, 
-and `img.width` and `img.height` indicate the image dimensions.
+* If the image is already available, `img.hasImage` is `true`, and `img.width` and `img.height`
+  indicate the image dimensions.
 
-* While the image is **not** yet available, 
-`img.hasImage` is `false`, and `img.width` and `img.height` are `null`.
+* While the image is **not** yet available,
+  `img.hasImage` is `false`, and `img.width` and `img.height` are `null`.
 
-* The functions `img.pixelColorAt()` and `img.pixelColorAtAlignment()` 
-can be used in the `builder` to read the color of the image pixels. 
+* The functions `img.pixelColorAt()` and `img.pixelColorAtAlignment()`
+  can be used in the `builder` to read the color of the image pixels.
 
-* If the coordinates point to outside of the image, 
-or if the image is not yet available, then these functions will return the
-`defaultColor` provided in the `ImagePixels` constructor.
+* If the coordinates point to outside of the image, or if the image is not yet available, then these
+  functions will return the
+  `defaultColor` provided in the `ImagePixels` constructor.
 
-* The `img.uiImage` parameter contains the image as a `ui.Image` type. 
-It will be `null` while the image is still downloading.
+* The `img.uiImage` parameter contains the image as a `ui.Image` type. It will be `null` while the
+  image is still downloading.
 
-* The `img.byteData` parameter contains the image as a `ByteDate` type. 
-It will be `null` while the image is still downloading.
+* The `img.byteData` parameter contains the image as a `ByteDate` type. It will be `null` while the
+  image is still downloading.
 
 <br>
 
 ## Other use cases
 
-* **Getting the tapped pixel color** — 
-By wrapping the child of the `ImagePixel` with a `GestureDetector` you get the tapped position, 
-and then it's easy to get the color of the tapped image pixel.
+* **Getting the tapped pixel color** — By wrapping the child of the `ImagePixel` with
+  a `GestureDetector` you get the tapped position, and then it's easy to get the color of the tapped
+  image pixel.
 
-* **Modifying the image** — 
-The child of the `ImagePixel` can be a `CustomPainter`, 
-and then you can use a **canvas** to paint whatever you want
-on top of the image, or else create an entirely new image from the original image pixels.
+* **Modifying the image** — The child of the `ImagePixel` can be a `CustomPainter`, and then you can
+  use a **canvas** to paint whatever you want on top of the image, or else create an entirely new
+  image from the original image pixels.
 
 <br>
 
 ***
 
 *The Flutter packages I've authored:*
+
 * <a href="https://pub.dev/packages/async_redux">async_redux</a>
 * <a href="https://pub.dev/packages/fast_immutable_collections">fast_immutable_collections</a>
 * <a href="https://pub.dev/packages/provider_for_redux">provider_for_redux</a>
@@ -135,11 +137,21 @@ on top of the image, or else create an entirely new image from the original imag
 * <a href="https://pub.dev/packages/weak_map">weak_map</a>
 
 *My Medium Articles:*
-* <a href="https://medium.com/flutter-community/https-medium-com-marcglasberg-async-redux-33ac5e27d5f6">Async Redux: Flutter’s non-boilerplate version of Redux</a> (versions: <a href="https://medium.com/flutterando/async-redux-pt-brasil-e783ceb13c43">Português</a>)
-* <a href="https://medium.com/flutter-community/i18n-extension-flutter-b966f4c65df9">i18n_extension</a> (versions: <a href="https://medium.com/flutterando/qual-a-forma-f%C3%A1cil-de-traduzir-seu-app-flutter-para-outros-idiomas-ab5178cf0336">Português</a>)
-* <a href="https://medium.com/flutter-community/flutter-the-advanced-layout-rule-even-beginners-must-know-edc9516d1a2">Flutter: The Advanced Layout Rule Even Beginners Must Know</a> (versions: <a href="https://habr.com/ru/post/500210/">русский</a>)
+
+* <a href="https://medium.com/flutter-community/https-medium-com-marcglasberg-async-redux-33ac5e27d5f6">
+  Async Redux: Flutter’s non-boilerplate version of Redux</a> (
+  versions: <a href="https://medium.com/flutterando/async-redux-pt-brasil-e783ceb13c43">
+  Português</a>)
+* <a href="https://medium.com/flutter-community/i18n-extension-flutter-b966f4c65df9">
+  i18n_extension</a> (
+  versions: <a href="https://medium.com/flutterando/qual-a-forma-f%C3%A1cil-de-traduzir-seu-app-flutter-para-outros-idiomas-ab5178cf0336">
+  Português</a>)
+* <a href="https://medium.com/flutter-community/flutter-the-advanced-layout-rule-even-beginners-must-know-edc9516d1a2">
+  Flutter: The Advanced Layout Rule Even Beginners Must Know</a> (
+  versions: <a href="https://habr.com/ru/post/500210/">русский</a>)
 
 *My article in the official Flutter documentation*:
+
 * <a href="https://flutter.dev/docs/development/ui/layout/constraints">Understanding constraints</a>
 
 <br>_Marcelo Glasberg:_<br>
