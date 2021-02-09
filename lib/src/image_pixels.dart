@@ -156,9 +156,10 @@ class _ImagePixelsState extends State<ImagePixels> {
   }
 
   void _loadCallback(ui.Image image) {
-    setState(() {
-      _toByteData(image);
-    });
+    if (mounted)
+      setState(() {
+        _toByteData(image);
+      });
   }
 
   void _toByteData(ui.Image image) {
@@ -176,7 +177,7 @@ class _ImagePixelsState extends State<ImagePixels> {
         width = image.width;
         height = image.height;
         byteData = await image.toByteData(format: ui.ImageByteFormat.rawRgba);
-        setState(() {});
+        if (mounted) setState(() {});
       });
     }
   }
