@@ -68,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     color: img.pixelColorAtAlignment(Alignment.topLeft),
                     alignment: Alignment.center,
                     child: Stack(
-                      overflow: Overflow.visible,
+                      clipBehavior: Clip.none,
                       children: [
                         Container(
                           width: 100,

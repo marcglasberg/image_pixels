@@ -65,7 +65,7 @@ The `ImagePixels` constructor lets you define an image through an `imageProvider
 a `builder` to build a child widget that depends on the image dimension and the color of its pixels.
 
 The default constructor lets you provide the `imageProvider`, the `builder`, as well as
-a `defaultColor` to be used when reading pixels outside of the image
+a `defaultColor` to be used when reading pixels outside the image
 (or while the image is downloading).
 
 For example, this will print the size of the image:
@@ -94,7 +94,7 @@ information:
 * The functions `img.pixelColorAt()` and `img.pixelColorAtAlignment()`
   can be used in the `builder` to read the color of the image pixels.
 
-* If the coordinates point to outside of the image, or if the image is not yet available, then these
+* If the coordinates point to outside the image, or if the image is not yet available, then these
   functions will return the
   `defaultColor` provided in the `ImagePixels` constructor.
 

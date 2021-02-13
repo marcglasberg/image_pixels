@@ -24,28 +24,28 @@ class ImgDetails {
   //
 
   /// The width (number of pixels) of the original image.
-  final int width;
+  final int? width;
 
   /// The height (number of pixels) of the original image.
-  final int height;
+  final int? height;
 
   /// Returns the pixel color from its coordinates:
   /// (0,0) top-left; To (width-1, height-1) bottom-right.
-  final Color Function(int x, int y) pixelColorAt;
+  final Color Function(int x, int y)? pixelColorAt;
 
   /// Returns the pixel color from its coordinates:
   /// (-1, -1) top-left; To (1, 1) bottom-right.
-  final Color Function(Alignment alignment) pixelColorAtAlignment;
+  final Color Function(Alignment alignment)? pixelColorAtAlignment;
 
   /// The image itself, as a ui.Image.
   /// Usually you should not read from the image directly, but through
   /// the helper methods `pixelColorAt` and `pixelColorAtAlignment`.
-  final ui.Image uiImage;
+  final ui.Image? uiImage;
 
   /// The image itself as a ByteData.
   /// Usually you should not read from the image directly, but through
   /// the helper methods `pixelColorAt` and `pixelColorAtAlignment`.
-  final ByteData byteData;
+  final ByteData? byteData;
 
   /// Returns true when the image is downloaded and available.
   bool get hasImage => uiImage != null;
@@ -75,36 +75,40 @@ class ImgDetails {
 ///
 class ImagePixels extends StatefulWidget {
   //
-  final ImageProvider imageProvider;
+  final ImageProvider? imageProvider;
   final Color defaultColor;
   final BuilderFromImage builder;
 
+  /// Lets you provide the [imageProvider], the [builder], as well as a
+  /// [defaultColor] to be used when reading pixels outside the image (or
+  /// while the image is downloading). If [imageProvider] is null, the
+  /// image will be empty and it will all be painted with the [defaultColor].
   ImagePixels({
-    @required this.imageProvider,
+    required this.imageProvider,
     this.defaultColor = Colors.grey,
-    @required this.builder,
-  })  : assert(defaultColor != null),
-        assert(builder != null);
+    required this.builder,
+  });
 
   /// Returns a container with the given [child].
-  /// The background color of the container is given by the pixel in the [colorAlignment]
-  /// position of the image pointed by the [imageProvider].
-  ///
+  /// The background color of the container is given by the pixel in the
+  /// [colorAlignment] position of the image pointed by the [imageProvider].
+  /// The [defaultColor] will be used for pixels outside the image (or
+  /// while the image is downloading). If [imageProvider] is null, the
+  /// image will be empty and it will all be painted with the [defaultColor].
   ImagePixels.container({
-    @required this.imageProvider,
+    required this.imageProvider,
     this.defaultColor = Colors.grey,
     Alignment colorAlignment = Alignment.topLeft,
-    Widget child,
-  })  : assert(defaultColor != null),
-        builder = _color(colorAlignment, child, defaultColor);
+    Widget? child,
+  }) : builder = _color(colorAlignment, child, defaultColor);
 
   static BuilderFromImage _color(
     Alignment colorAlignment,
-    Widget child,
+    Widget? child,
     Color defaultColor,
   ) =>
       (context, img) => Container(
-            color: img.hasImage ? img.pixelColorAtAlignment(colorAlignment) : defaultColor,
+            color: img.hasImage ? img.pixelColorAtAlignment!(colorAlignment) : defaultColor,
             child: child,
           );
 
@@ -116,12 +120,12 @@ class ImagePixels extends StatefulWidget {
 
 class _ImagePixelsState extends State<ImagePixels> {
   //
-  ui.Image image;
-  ByteData byteData;
-  int width;
-  int height;
+  ui.Image? image;
+  ByteData? byteData;
+  int? width;
+  int? height;
 
-  ImageProvider get imageProvider => widget.imageProvider;
+  ImageProvider? get imageProvider => widget.imageProvider;
 
   Color get defaultColor => widget.defaultColor;
 
@@ -130,7 +134,7 @@ class _ImagePixelsState extends State<ImagePixels> {
     super.initState();
     if (imageProvider == null) return;
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       _refreshImage();
     });
   }
@@ -143,13 +147,15 @@ class _ImagePixelsState extends State<ImagePixels> {
 
   void _refreshImage() {
     //
-    if (imageProvider == null) {
+    var _imageProvider = imageProvider;
+
+    if (_imageProvider == null) {
       _toByteData(null);
     }
     //
     else
       _GetImage(
-        imageProvider: imageProvider,
+        imageProvider: _imageProvider,
         loadCallback: _loadCallback,
         buildContext: context,
       ).run();
@@ -162,7 +168,7 @@ class _ImagePixelsState extends State<ImagePixels> {
       });
   }
 
-  void _toByteData(ui.Image image) {
+  void _toByteData(ui.Image? image) {
     //
     if (image == null) {
       this.image = null;
@@ -188,18 +194,18 @@ class _ImagePixelsState extends State<ImagePixels> {
         width == null ||
         height == null ||
         x < 0 ||
-        x >= width ||
+        x >= width! ||
         y < 0 ||
-        y >= height)
+        y >= height!)
       return defaultColor;
     else {
-      var byteOffset = 4 * (x + (y * width));
+      var byteOffset = 4 * (x + (y * width!));
       return _colorAtByteOffset(byteOffset);
     }
   }
 
   /// Pixel coordinates: (-1, -1) → (1, 1).
-  Color pixelColorAtAlignment(Alignment alignment) {
+  Color pixelColorAtAlignment(Alignment? alignment) {
     if (byteData == null ||
         width == null ||
         height == null ||
@@ -209,11 +215,11 @@ class _ImagePixelsState extends State<ImagePixels> {
         alignment.y < -1.0 ||
         alignment.y > 1.0) return defaultColor;
 
-    Offset offset = alignment.alongSize(Size(width.toDouble() - 1.0, height.toDouble() - 1.0));
+    Offset offset = alignment.alongSize(Size(width!.toDouble() - 1.0, height!.toDouble() - 1.0));
     return pixelColorAt(offset.dx.round(), offset.dy.round());
   }
 
-  Color _colorAtByteOffset(int byteOffset) => Color(_rgbaToArgb(byteData.getUint32(byteOffset)));
+  Color _colorAtByteOffset(int byteOffset) => Color(_rgbaToArgb(byteData!.getUint32(byteOffset)));
 
   int _rgbaToArgb(int rgbaColor) {
     int a = rgbaColor & 0xFF;
@@ -244,12 +250,10 @@ class _ImagePixelsState extends State<ImagePixels> {
 class _GetImage {
   //
   _GetImage({
-    @required this.imageProvider,
-    @required this.loadCallback,
-    @required this.buildContext,
-  })  : assert(imageProvider != null),
-        assert(loadCallback != null),
-        assert(buildContext != null);
+    required this.imageProvider,
+    required this.loadCallback,
+    required this.buildContext,
+  });
 
   final ImageProvider imageProvider;
 
@@ -263,7 +267,7 @@ class _GetImage {
 
     Object key = await imageProvider.obtainKey(imageConfiguration);
 
-    final ImageStreamCompleter completer = PaintingBinding.instance.imageCache.putIfAbsent(
+    final ImageStreamCompleter? completer = PaintingBinding.instance!.imageCache!.putIfAbsent(
       key, // key
       // ignore: invalid_use_of_protected_member
       () => imageProvider.load(key, _decoder), // loader
@@ -293,11 +297,11 @@ class _GetImage {
 
   Future<ui.Codec> _decoder(
     Uint8List bytes, {
-    bool allowUpscaling,
-    int cacheWidth,
-    int cacheHeight,
+    bool? allowUpscaling,
+    int? cacheWidth,
+    int? cacheHeight,
   }) =>
-      PaintingBinding.instance
+      PaintingBinding.instance!
           .instantiateImageCodec(bytes, cacheWidth: cacheWidth, cacheHeight: cacheHeight);
 }
 
@@ -305,18 +309,18 @@ class _GetImage {
 
 /// This is necessary because we want to remove the listener as soon as it's called.
 class _ListenerManager {
-  _ListenerManager(this.loadCallback) : assert(loadCallback != null);
+  _ListenerManager(this.loadCallback);
 
-  VoidCallback removeListener;
+  late VoidCallback removeListener;
 
   final void Function(ui.Image) loadCallback;
 
   void onImage(ImageInfo image, bool synchronousCall) {
-    if (loadCallback != null) loadCallback(image.image);
+    loadCallback(image.image);
     removeListener();
   }
 
-  void onError(dynamic exception, StackTrace stackTrace) {
+  void onError(dynamic exception, StackTrace? stackTrace) {
     removeListener();
   }
 }
