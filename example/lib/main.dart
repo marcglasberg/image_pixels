@@ -13,13 +13,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'ImagePixels Demo'),
+      home: const MyHomePage(title: 'ImagePixels Demo'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  const MyHomePage({Key key, this.title}) : super(key: key);
 
   final String title;
 
@@ -28,8 +28,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final AssetImage angular = AssetImage("lib/images/AngularLogo.jpg");
-  final AssetImage flutter = AssetImage("lib/images/FlutterLogo.jpg");
+  final AssetImage angular = const AssetImage("lib/images/AngularLogo.jpg");
+  final AssetImage flutter = const AssetImage("lib/images/FlutterLogo.jpg");
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 imageProvider: flutter,
                 child: Container(
                   alignment: Alignment.center,
-                  child: Container(width: 100, child: Image(image: flutter)),
+                  child: SizedBox(width: 100, child: Image(image: flutter)),
                 ),
               ),
             ),
@@ -70,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Stack(
                       clipBehavior: Clip.none,
                       children: [
-                        Container(
+                        SizedBox(
                           width: 100,
                           child: Image(image: angular),
                         ),

@@ -83,7 +83,7 @@ class ImagePixels extends StatefulWidget {
   /// [defaultColor] to be used when reading pixels outside the image (or
   /// while the image is downloading). If [imageProvider] is null, the
   /// image will be empty and it will all be painted with the [defaultColor].
-  ImagePixels({
+  const ImagePixels({
     required this.imageProvider,
     this.defaultColor = Colors.grey,
     required this.builder,
@@ -261,7 +261,7 @@ class _GetImage {
 
   final BuildContext buildContext;
 
-  void run() async {
+  Future<void> run() async {
     //
     ImageConfiguration imageConfiguration = createLocalImageConfiguration(buildContext);
 
