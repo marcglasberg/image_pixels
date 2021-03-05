@@ -19,9 +19,9 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key key, this.title}) : super(key: key);
+  const MyHomePage({Key? key, this.title}) : super(key: key);
 
-  final String title;
+  final String? title;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -35,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.title!),
       ),
       body: SizedBox.expand(
         child: Column(
@@ -65,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 imageProvider: angular,
                 builder: (BuildContext context, ImgDetails img) {
                   return Container(
-                    color: img.pixelColorAtAlignment(Alignment.topLeft),
+                    color: img.pixelColorAtAlignment!(Alignment.topLeft),
                     alignment: Alignment.center,
                     child: Stack(
                       clipBehavior: Clip.none,
