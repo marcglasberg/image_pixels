@@ -135,7 +135,7 @@ class _ImagePixelsState extends State<ImagePixels> {
     if (imageProvider == null) return;
 
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-      _refreshImage();
+      if (mounted) _refreshImage();
     });
   }
 
