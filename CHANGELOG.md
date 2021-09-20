@@ -1,3 +1,7 @@
+## [2.0.1] - 2021/09/20
+
+* Doc improvements.
+
 ## [2.0.0] - 2021/03/05
 
 * Nullsafe version.
