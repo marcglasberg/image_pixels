@@ -110,7 +110,7 @@ information:
 
 * **Getting the tapped pixel color** — By wrapping the child of the `ImagePixel` with
   a `GestureDetector` you get the tapped position, and then it's easy to get the color of the tapped
-  image pixel.
+  image pixel. Try running the <a href="main_find_color.dart">Example</a>.
 
 * **Modifying the image** — The child of the `ImagePixel` can be a `CustomPainter`, and then you can
   use a **canvas** to paint whatever you want on top of the image, or else create an entirely new

@@ -1,3 +1,7 @@
+## [2.0.2] - 2022/02/21
+
+* Doc improvements.
+
 ## [2.0.1] - 2021/09/20
 
 * Doc improvements.
