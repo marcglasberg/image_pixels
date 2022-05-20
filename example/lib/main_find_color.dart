@@ -74,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             localPosition.dy.toInt(),
                           );
 
-                          WidgetsBinding.instance!.addPostFrameCallback((_) {
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
                             if (mounted)
                               setState(() {
                                 if (color != this.color) this.color = color;
