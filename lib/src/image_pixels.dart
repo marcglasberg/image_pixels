@@ -134,7 +134,7 @@ class _ImagePixelsState extends State<ImagePixels> {
     super.initState();
     if (imageProvider == null) return;
 
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) _refreshImage();
     });
   }
@@ -267,7 +267,7 @@ class _GetImage {
 
     Object key = await imageProvider.obtainKey(imageConfiguration);
 
-    final ImageStreamCompleter? completer = PaintingBinding.instance!.imageCache!.putIfAbsent(
+    final ImageStreamCompleter? completer = PaintingBinding.instance.imageCache.putIfAbsent(
       key, // key
       // ignore: invalid_use_of_protected_member
       () => imageProvider.load(key, _decoder), // loader
@@ -301,8 +301,7 @@ class _GetImage {
     int? cacheWidth,
     int? cacheHeight,
   }) =>
-      PaintingBinding.instance!
-          .instantiateImageCodec(bytes, cacheWidth: cacheWidth, cacheHeight: cacheHeight);
+      PaintingBinding.instance.instantiateImageCodec(bytes, cacheWidth: cacheWidth, cacheHeight: cacheHeight);
 }
 
 // /////////////////////////////////////////////////////////////////////////////////////////////////
