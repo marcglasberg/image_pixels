@@ -1,11 +1,11 @@
 name: image_pixels
 description: Lets you extend the background color of an image, or else build any widget that depends on an image width/height or the color of its pixels.
-version: 2.0.2
+version: 3.0.0
 # author: Marcelo Glasberg <marcglasberg@gmail.com>
 homepage: https://github.com/marcglasberg/image_pixels
 
 environment:
-  sdk: ">=2.13.0 <3.0.0"
+  sdk: ">=2.17.0 <3.0.0"
   flutter: ">=2.0.0"
 
 dependencies:
