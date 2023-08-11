@@ -1,16 +1,11 @@
 analyzer:
-  strong-mode:
-    # Will become the default once non-nullable types land
-    # https://github.com/dart-lang/sdk/issues/31410#issuecomment-510683629
-    implicit-casts: false
-    implicit-dynamic: false
   errors:
-    # treat missing required parameters as a warning (not a hint)
-    missing_required_param: warning
-    # treat missing returns as a warning (not a hint)
-    missing_return: warning
-    # allow having TODOs in the code
-    todo: ignore
+    missing_required_param: warning # treat missing required parameters as a warning (not a hint)
+    missing_return: warning # treat missing returns as a warning (not a hint)
+    todo: ignore # allow having TODOs in the code
+  language:
+    strict-casts: true
+    strict-raw-types: true
 
 # Rules are in the same order (alphabetically) as documented at http://dart-lang.github.io/linter/lints
 # and https://github.com/dart-lang/linter/blob/master/example/all.yaml

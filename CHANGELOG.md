@@ -1,3 +1,7 @@
+## [3.0.1] - 2022/08/11
+
+* Improved documentation and modernization of deprecated methods. Fixed broken URL in docs.
+
 ## [3.0.0] - 2022/06/08
 
 * Flutter 3.0.

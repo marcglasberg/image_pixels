@@ -2,19 +2,21 @@
 
 # image_pixels
 
-Lets you build a widget that depends on the _width_ and _height_ of some image, and the _color of
-its pixels_.
+This package allows you to build a widget that depends on, or uses the values of:
+
+* The _width_ and _height_ of some image, or
+* The _color_ of the image pixels
 
 Try running
 the <a href="https://github.com/marcglasberg/image_pixels/blob/master/example/lib/main.dart">
 Example</a>.
 
-## Extend the image background-color
+## Extend the background-color of an image
 
-The `ImagePixels.container` constructor adds a background-color that is the same color as the image
-pixel at the `colorAlignment` position.
+The `ImagePixels.container()` constructor adds a background-color that is the same color as the
+image pixel at the `colorAlignment` position.
 
-For example, if you put the image inside a `Container` you get this:
+For example, suppose you put an image inside a `Container`, like this:
 
 ```   
 Container(
@@ -62,13 +64,14 @@ ImagePixels.container(
 ## Using a builder
 
 The `ImagePixels` constructor lets you define an image through an `imageProvider`, and then use
-a `builder` to build a child widget that depends on the image dimension and the color of its pixels.
+a `builder` to build a child widget that depends on the image dimensions and the color of its
+pixels.
 
 The default constructor lets you provide the `imageProvider`, the `builder`, as well as
-a `defaultColor` to be used when reading pixels outside the image
-(or while the image is downloading).
+a `defaultColor` to be used when reading pixels outside the image bounds or while the image is
+still downloading.
 
-For example, this will print the size of the image:
+For example, this will display the size of the image as a `Text` widget:
 
 ```
 ImagePixels(
@@ -82,39 +85,48 @@ ImagePixels(
 
 ### Builder parameters
 
-The `builder` provides an `img` parameter of type `BuilderFromImage`, with the following
-information:
+The `builder` function gives you access to an `img` parameter of type `ImgDetails`, with the
+following information:
 
 * If the image is already available, `img.hasImage` is `true`, and `img.width` and `img.height`
   indicate the image dimensions.
 
+
 * While the image is **not** yet available,
   `img.hasImage` is `false`, and `img.width` and `img.height` are `null`.
 
-* The functions `img.pixelColorAt()` and `img.pixelColorAtAlignment()`
-  can be used in the `builder` to read the color of the image pixels.
 
-* If the coordinates point to outside the image, or if the image is not yet available, then these
-  functions will return the
-  `defaultColor` provided in the `ImagePixels` constructor.
+* The functions `img.pixelColorAt()` and `img.pixelColorAtAlignment()`
+  can be used in the `builder` body to read the color of the image pixels.
+
+
+* If the coordinates point to outside the image, or if the image is not yet available (is still
+  being downloaded or failed to download), then these functions will return the `defaultColor`
+  provided in the `ImagePixels` constructor.
+
 
 * The `img.uiImage` parameter contains the image as a `ui.Image` type. It will be `null` while the
   image is still downloading.
 
-* The `img.byteData` parameter contains the image as a `ByteDate` type. It will be `null` while the
+
+* The `img.byteData` parameter contains the image as a `ByteData` type. It will be `null` while the
   image is still downloading.
 
 <br>
 
 ## Other use cases
 
-* **Getting the tapped pixel color** — By wrapping the child of the `ImagePixel` with
-  a `GestureDetector` you get the tapped position, and then it's easy to get the color of the tapped
-  image pixel. Try running the <a href="main_find_color.dart">Example</a>.
+* **Getting the tapped pixel color**: By wrapping the child of the `ImagePixel` with
+  a `GestureDetector` you can obtain the x/y position where the user tapped the image. From this
+  information, you can then determine the color of the tapped pixel.
+  Try running
+  the <a href="https://github.com/marcglasberg/image_pixels/blob/master/example/lib/main_find_color.dart">
+  Example</a>.
 
-* **Modifying the image** — The child of the `ImagePixel` can be a `CustomPainter`, and then you can
+
+* **Modifying the image**: The child of the `ImagePixel` can be a `CustomPainter`. Then, you can
   use a **canvas** to paint whatever you want on top of the image, or else create an entirely new
-  image from the original image pixels.
+  image from the pixels of the original image.
 
 <br>
 

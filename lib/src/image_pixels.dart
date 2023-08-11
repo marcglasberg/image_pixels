@@ -1,8 +1,7 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-import 'package:flutter/material.dart';
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////
+import 'package:flutter/material.dart';
 
 /// If the image is already available, [hasImage] is true, and [width] and [height]
 /// indicate the image dimensions.
@@ -17,9 +16,6 @@ import 'package:flutter/material.dart';
 ///
 typedef BuilderFromImage = Widget Function(BuildContext context, ImgDetails img);
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////
-
-///
 class ImgDetails {
   //
 
@@ -59,8 +55,6 @@ class ImgDetails {
     this.pixelColorAtAlignment,
   });
 }
-
-// /////////////////////////////////////////////////////////////////////////////////////////////////
 
 /// The [ImagePixels] widget lets you define an image through an [imageProvider],
 /// and then use a [builder] to build a child widget that depends on the image dimension
@@ -241,8 +235,6 @@ class _ImagePixelsState extends State<ImagePixels> {
       );
 }
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////
-
 /// Calls the provided [loadCallback] with the image.
 /// The image will come from Flutter's image cache, if present.
 /// Otherwise, retrieves the image and puts it into the cache.
@@ -270,7 +262,7 @@ class _GetImage {
     final ImageStreamCompleter? completer = PaintingBinding.instance.imageCache.putIfAbsent(
       key, // key
       // ignore: invalid_use_of_protected_member
-      () => imageProvider.load(key, _decoder), // loader
+      () => imageProvider.loadImage(key, _decoder), // loader
       onError: null,
     );
 
@@ -296,15 +288,11 @@ class _GetImage {
   }
 
   Future<ui.Codec> _decoder(
-    Uint8List bytes, {
-    bool? allowUpscaling,
-    int? cacheWidth,
-    int? cacheHeight,
+    ui.ImmutableBuffer buffer, {
+    ui.TargetImageSizeCallback? getTargetSize,
   }) =>
-      PaintingBinding.instance.instantiateImageCodec(bytes, cacheWidth: cacheWidth, cacheHeight: cacheHeight);
+      PaintingBinding.instance.instantiateImageCodecWithSize(buffer, getTargetSize: getTargetSize);
 }
-
-// /////////////////////////////////////////////////////////////////////////////////////////////////
 
 /// This is necessary because we want to remove the listener as soon as it's called.
 class _ListenerManager {
@@ -323,5 +311,3 @@ class _ListenerManager {
     removeListener();
   }
 }
-
-// /////////////////////////////////////////////////////////////////////////////////////////////////
