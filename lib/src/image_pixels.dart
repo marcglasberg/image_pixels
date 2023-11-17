@@ -110,8 +110,6 @@ class ImagePixels extends StatefulWidget {
   _ImagePixelsState createState() => _ImagePixelsState();
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
 class _ImagePixelsState extends State<ImagePixels> {
   //
   ui.Image? image;
