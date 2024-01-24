@@ -1,4 +1,4 @@
-## [3.0.1] - 2022/08/11
+## [3.0.2] - 2022/08/11
 
 * Improved documentation and modernization of deprecated methods. Fixed broken URL in docs.
 
