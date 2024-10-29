@@ -1,3 +1,5 @@
+[![](./example/SponsoredByMyTextAi.png)](https://mytext.ai)
+
 [![pub package](https://img.shields.io/pub/v/image_pixels.svg)](https://pub.dartlang.org/packages/image_pixels)
 
 # image_pixels
@@ -13,7 +15,8 @@ Example</a>.
 
 ## Extend the background-color of an image
 
-The `ImagePixels.container()` constructor adds a background-color that is the same color as the
+The `ImagePixels.container()` constructor adds a background-color that is the same color
+as the
 image pixel at the `colorAlignment` position.
 
 For example, suppose you put an image inside a `Container`, like this:
@@ -63,13 +66,13 @@ ImagePixels.container(
 
 ## Using a builder
 
-The `ImagePixels` constructor lets you define an image through an `imageProvider`, and then use
-a `builder` to build a child widget that depends on the image dimensions and the color of its
-pixels.
+The `ImagePixels` constructor lets you define an image through an `imageProvider`, and
+then use a `builder` to build a child widget that depends on the image dimensions and the
+color of its pixels.
 
 The default constructor lets you provide the `imageProvider`, the `builder`, as well as
-a `defaultColor` to be used when reading pixels outside the image bounds or while the image is
-still downloading.
+a `defaultColor` to be used when reading pixels outside the image bounds or while the
+image is still downloading.
 
 For example, this will display the size of the image as a `Text` widget:
 
@@ -85,11 +88,11 @@ ImagePixels(
 
 ### Builder parameters
 
-The `builder` function gives you access to an `img` parameter of type `ImgDetails`, with the
-following information:
+The `builder` function gives you access to an `img` parameter of type `ImgDetails`, with
+the following information:
 
-* If the image is already available, `img.hasImage` is `true`, and `img.width` and `img.height`
-  indicate the image dimensions.
+* If the image is already available, `img.hasImage` is `true`, and `img.width`
+  and `img.height` indicate the image dimensions.
 
 
 * While the image is **not** yet available,
@@ -100,33 +103,33 @@ following information:
   can be used in the `builder` body to read the color of the image pixels.
 
 
-* If the coordinates point to outside the image, or if the image is not yet available (is still
-  being downloaded or failed to download), then these functions will return the `defaultColor`
-  provided in the `ImagePixels` constructor.
+* If the coordinates point to outside the image, or if the image is not yet available (is
+  still being downloaded or failed to download), then these functions will return
+  the `defaultColor` provided in the `ImagePixels` constructor.
 
 
-* The `img.uiImage` parameter contains the image as a `ui.Image` type. It will be `null` while the
-  image is still downloading.
+* The `img.uiImage` parameter contains the image as a `ui.Image` type. It will be `null`
+  while the image is still downloading.
 
 
-* The `img.byteData` parameter contains the image as a `ByteData` type. It will be `null` while the
-  image is still downloading.
+* The `img.byteData` parameter contains the image as a `ByteData` type. It will be `null`
+  while the image is still downloading.
 
 <br>
 
 ## Other use cases
 
 * **Getting the tapped pixel color**: By wrapping the child of the `ImagePixel` with
-  a `GestureDetector` you can obtain the x/y position where the user tapped the image. From this
-  information, you can then determine the color of the tapped pixel.
+  a `GestureDetector` you can obtain the x/y position where the user tapped the image.
+  From this information, you can then determine the color of the tapped pixel.
   Try running
   the <a href="https://github.com/marcglasberg/image_pixels/blob/master/example/lib/main_find_color.dart">
   Example</a>.
 
 
-* **Modifying the image**: The child of the `ImagePixel` can be a `CustomPainter`. Then, you can
-  use a **canvas** to paint whatever you want on top of the image, or else create an entirely new
-  image from the pixels of the original image.
+* **Modifying the image**: The child of the `ImagePixel` can be a `CustomPainter`. Then,
+  you can use a **canvas** to paint whatever you want on top of the image, or else create
+  an entirely new image from the pixels of the original image.
 
 <br>
 
@@ -135,7 +138,8 @@ following information:
 *The Flutter packages I've authored:*
 
 * <a href="https://pub.dev/packages/async_redux">async_redux</a>
-* <a href="https://pub.dev/packages/fast_immutable_collections">fast_immutable_collections</a>
+* <a href="https://pub.dev/packages/fast_immutable_collections">
+  fast_immutable_collections</a>
 * <a href="https://pub.dev/packages/provider_for_redux">provider_for_redux</a>
 * <a href="https://pub.dev/packages/i18n_extension">i18n_extension</a>
 * <a href="https://pub.dev/packages/align_positioned">align_positioned</a>
@@ -167,11 +171,11 @@ following information:
 
 *My article in the official Flutter documentation*:
 
-* <a href="https://flutter.dev/docs/development/ui/layout/constraints">Understanding constraints</a>
+* <a href="https://flutter.dev/docs/development/ui/layout/constraints">Understanding
+  constraints</a>
 
 <br>_Marcelo Glasberg:_<br>
 _https://github.com/marcglasberg_<br>
 _https://twitter.com/glasbergmarcelo_<br>
 _https://stackoverflow.com/users/3411681/marcg_<br>
 _https://medium.com/@marcglasberg_<br>
-

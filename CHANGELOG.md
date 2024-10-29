@@ -1,32 +1,34 @@
-## [3.0.2] - 2022/08/11
+## 4.0.0
+
+* Sponsored by [MyText.ai](https://mytext.ai)
+
+[![](./example/SponsoredByMyTextAi.png)](https://mytext.ai)
+
+## 3.0.2
 
 * Improved documentation and modernization of deprecated methods. Fixed broken URL in docs.
 
-## [3.0.0] - 2022/06/08
+## 3.0.0
 
 * Flutter 3.0.
 
-## [2.0.2] - 2022/02/21
+## 2.0.2
 
 * Doc improvements.
 
-## [2.0.1] - 2021/09/20
-
-* Doc improvements.
-
-## [2.0.0] - 2021/03/05
+## 2.0.0 
 
 * Nullsafe version.
 
-## [1.0.5] - 2021/01/18
+## 1.0.5
 
 * Bug fix: Prevent setState if not mounted.
 * Doc improvements.
 
-## [1.0.3] - 2021/01/18
+## 1.0.3
 
 * Improved memory management.
 
-## [1.0.2] - 2020/09/10
+## 1.0.2
 
 * Initial Commit.
