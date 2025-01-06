@@ -1,13 +1,22 @@
+[![Pub popularity](https://badgen.net/pub/popularity/image_pixels)](https://pub.dev/packages/image_pixels)
+[![Pub Version](https://img.shields.io/pub/v/image_pixels?style=flat-square&logo=dart)](https://pub.dev/packages/image_pixels)
+[![GitHub stars](https://img.shields.io/github/stars/marcglasberg/image_pixels?style=social)](https://github.com/marcglasberg/image_pixels)
+![GitHub repo size](https://img.shields.io/github/repo-size/marcglasberg/image_pixels?style=flat-square)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)
+[![Developed by Marcelo Glasberg](https://img.shields.io/badge/Developed%20by%20Marcelo%20Glasberg-blue.svg)](https://glasberg.dev/)
+[![Glasberg.dev on pub.dev](https://img.shields.io/pub/publisher/image_pixels.svg)](https://pub.dev/publishers/glasberg.dev/packages)
+[![Platforms](https://badgen.net/pub/flutter-platform/image_pixels)](https://pub.dev/packages/image_pixels)
+
+#### Sponsor
+
 [![](./example/SponsoredByMyTextAi.png)](https://mytext.ai)
-
-[![pub package](https://img.shields.io/pub/v/image_pixels.svg)](https://pub.dartlang.org/packages/image_pixels)
-
+                  
 # image_pixels
 
 This package allows you to build a widget that depends on, or uses the values of:
 
 * The _width_ and _height_ of some image, or
-* The _color_ of the image pixels
+* The _colors_ of your image pixels
 
 Try running
 the <a href="https://github.com/marcglasberg/image_pixels/blob/master/example/lib/main.dart">
@@ -35,7 +44,7 @@ Container(
 );
 ```
 
-![](https://github.com/marcglasberg/image_pixels/blob/master/example/lib/images/with_container.jpg)
+![](https://raw.githubusercontent.com/marcglasberg/image_pixels/refs/heads/master/example/lib/images/with_container.jpg)
 
 <br>
 
@@ -60,7 +69,7 @@ ImagePixels.container(
 );
 ```
 
-![](https://github.com/marcglasberg/image_pixels/blob/master/example/lib/images/with_image_pixels.jpg)
+![](https://raw.githubusercontent.com/marcglasberg/image_pixels/refs/heads/master/example/lib/images/with_image_pixels.jpg)
 
 <br>
 
@@ -190,3 +199,7 @@ _stackoverflow.com/users/3411681/marcg_</a>
   (versions: <a href="https://habr.com/ru/post/500210/">русский</a>)
 * <a href="https://medium.com/flutter-community/the-new-way-to-create-themes-in-your-flutter-app-7fdfc4f3df5f">
   The New Way to create Themes in your Flutter App</a> 
+
+# image_pixels
+
+[![](./example/SponsoredByMyTextAi.png)](https://mytext.ai)
