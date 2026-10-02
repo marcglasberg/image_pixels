@@ -1,4 +1,3 @@
-[![Pub popularity](https://badgen.net/pub/popularity/image_pixels)](https://pub.dev/packages/image_pixels)
 [![Pub Version](https://img.shields.io/pub/v/image_pixels?style=flat-square&logo=dart)](https://pub.dev/packages/image_pixels)
 [![GitHub stars](https://img.shields.io/github/stars/marcglasberg/image_pixels?style=social)](https://github.com/marcglasberg/image_pixels)
 ![GitHub repo size](https://img.shields.io/github/repo-size/marcglasberg/image_pixels?style=flat-square)
