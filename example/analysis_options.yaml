@@ -3,6 +3,10 @@ analyzer:
     missing_required_param: warning # treat missing required parameters as a warning (not a hint)
     missing_return: warning # treat missing returns as a warning (not a hint)
     todo: ignore # allow having TODOs in the code
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
   language:
     strict-casts: true
     strict-raw-types: true
@@ -354,7 +358,7 @@ linter:
     #
     # pedantic: disabled
     # https://dart-lang.github.io/linter/lints/invariant_booleans.html
-    - invariant_booleans
+    # - invariant_booleans (removed in Dart 3.0)
 
     # Type check for Iterable<T>.contains(other) where other is! T
     # otherwise contains will always report false. Those errors are usually very hard to catch.
@@ -544,7 +548,7 @@ linter:
     # Prevent confusion with call-side when using named parameters
     # pedantic: enabled
     # https://dart-lang.github.io/linter/lints/prefer_equal_for_default_values.html
-    - prefer_equal_for_default_values
+    # - prefer_equal_for_default_values (removed in Dart 3.0)
 
     # Single line methods + implementation makes it hard to write comments for that line.
     # Dense code isn't necessarily better code.
