@@ -1,8 +1,8 @@
-## 4.0.2
+## 4.0.3
 
 * Sponsored by [MyText.ai](https://mytext.ai)
 
-[![](./example/SponsoredByMyTextAi.png)](https://mytext.ai)
+[![](./example/SponsoredByMyTextAi.jpg)](https://mytext.ai)
 
 ## 3.0.2
 

@@ -8,7 +8,7 @@
 
 #### Sponsor
 
-[![](./example/SponsoredByMyTextAi.png)](https://mytext.ai)
+[![](./example/SponsoredByMyTextAi.jpg)](https://mytext.ai)
                   
 # image_pixels
 
@@ -201,4 +201,4 @@ _stackoverflow.com/users/3411681/marcg_</a>
 
 # image_pixels
 
-[![](./example/SponsoredByMyTextAi.png)](https://mytext.ai)
+[![](./example/SponsoredByMyTextAi.jpg)](https://mytext.ai)
