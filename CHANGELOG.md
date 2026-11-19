@@ -1,3 +1,7 @@
+## 4.0.4
+
+* Use design-neutral Flutter widgets instead of the deprecated Material library. Preserve the default grey color value (0xFF9E9E9E).
+
 ## 4.0.3
 
 * Sponsored by [MyText.ai](https://mytext.ai)

@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 /// If the image is already available, [hasImage] is true, and [width] and [height]
 /// indicate the image dimensions.
@@ -79,7 +79,7 @@ class ImagePixels extends StatefulWidget {
   /// image will be empty and it will all be painted with the [defaultColor].
   const ImagePixels({
     required this.imageProvider,
-    this.defaultColor = Colors.grey,
+    this.defaultColor = const Color(0xFF9E9E9E),
     required this.builder,
   });
 
@@ -91,7 +91,7 @@ class ImagePixels extends StatefulWidget {
   /// image will be empty and it will all be painted with the [defaultColor].
   ImagePixels.container({
     required this.imageProvider,
-    this.defaultColor = Colors.grey,
+    this.defaultColor = const Color(0xFF9E9E9E),
     Alignment colorAlignment = Alignment.topLeft,
     Widget? child,
   }) : builder = _color(colorAlignment, child, defaultColor);
